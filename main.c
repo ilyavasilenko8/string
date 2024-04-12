@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include "String/tasks/string.h"
+
 int main() {
-    printf("Hello, World!\n");
+    test_string_();
     return 0;
 }
