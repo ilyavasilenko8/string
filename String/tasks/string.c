@@ -1,32 +1,33 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <assert.h>
+#include <memory.h>
 #include "string.h"
 
-size_t strlen_(const char *begin){
+size_t strlen_(const char *begin) {
     char *end = begin;
-    while(*end != '\0'){
+    while (*end != '\0') {
         end++;
     }
     return end - begin;
 }
 
-char *find(char *begin, char *end, int ch){
-    while(begin != end && *begin != ch){
+char *find(char *begin, char *end, int ch) {
+    while (begin != end && *begin != ch) {
         begin++;
     }
     return begin;
 }
 
-char *findSpace(char *begin){
-    while(!isspace(*begin) && *begin != '\0'){
+char *findSpace(char *begin) {
+    while (!isspace(*begin) && *begin != '\0') {
         begin++;
     }
     return begin;
 }
 
-char *findNonSpaceReverse(char *rbegin, const char *rend){
-    while(rbegin >= rend && isspace(*rbegin)){
+char *findNonSpaceReverse(char *rbegin, const char *rend) {
+    while (rbegin >= rend && isspace(*rbegin)) {
         rbegin--;
     }
     return rbegin;
@@ -152,12 +153,12 @@ void test_find_space_reverse_4() {
     assert(findSpaceReverse(string + 4, string) == string);
 }
 
-int strcmp_(const char *lhs, const char *rhs){
-    while(*lhs == *rhs && *lhs != '\0' && *rhs != '\0'){
+int strcmp_(const char *lhs, const char *rhs) {
+    while (*lhs == *rhs && *lhs != '\0' && *rhs != '\0') {
         lhs++;
         rhs++;
     }
-    return *lhs-*rhs;
+    return *lhs - *rhs;
 }
 
 void test_is_strings_equal_1() {
@@ -181,7 +182,72 @@ void test_is_strings_equal_3() {
     assert(strcmp_(string1, string2) < 0);
 }
 
-void test_string_(){
+char *copy(const char *beginSource, const char *endSource, char *beginDestination) {
+    size_t size = endSource - beginSource;
+    memcpy(beginDestination, beginSource, size);
+    *(beginDestination + size) = '\0';
+
+    return beginDestination + size;
+}
+
+char *copyIf(char *beginSource, const char *endSource, char *beginDestination, int (*f)(int)) {
+    while (beginSource != endSource) {
+        if (f(*beginSource)) {
+            *beginDestination = *beginSource;
+            beginDestination++;
+        }
+        beginSource++;
+    }
+    *beginDestination = '\0';
+
+    return beginDestination;
+}
+
+char *copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDestination, int (*f)(int)) {
+    char *beginDestination_ = beginDestination;
+    while (rbeginSource >= rendSource) {
+        if (f(*rbeginSource)) {
+            *beginDestination_ = *rbeginSource;
+            beginDestination_++;
+        }
+        rbeginSource--;
+    }
+    *beginDestination_ = '\0';
+    return beginDestination_;
+}
+
+int is_h(char s) {
+    return s == 'h' || s == 'w';
+}
+
+void test_copy() {
+    char string[] = "hahh";
+    char new_string[4];
+    copy(string, string + 3, new_string);
+    char result[] = "hah";
+
+    assert(strcmp_(new_string, result) == 0);
+}
+
+void test_copyIf() {
+    char string[] = "hahh";
+    char new_string[4];
+    copyIf(string, string + 3, new_string, (int (*)(int)) is_h);
+    char result[] = "hh";
+
+    assert(strcmp_(new_string, result) == 0);
+}
+
+void test_copyIfReverse() {
+    char string[] = "haw";
+    char new_string[3];
+    copyIfReverse(string + 3, string, new_string, (int (*)(int)) is_h);
+    char result[] = "wh";
+
+    assert(strcmp_(new_string, result) == 0);
+}
+
+void test_string_() {
     test_find_1();
     test_find_2();
     test_find_3();
@@ -205,4 +271,7 @@ void test_string_(){
     test_is_strings_equal_1();
     test_is_strings_equal_2();
     test_is_strings_equal_3();
+    test_copy();
+    test_copyIf();
+    test_copyIfReverse();
 }
