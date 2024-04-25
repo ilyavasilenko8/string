@@ -381,9 +381,9 @@ int getWord(char *beginSearch, WordDescriptor *word) {
     return 1;
 }
 
-void digitToStart(WordDescriptor word){
-    char _strinBuffer[MAX_STRING_SIZE+1];
-    char *endStringBuffer=copy(word.begin, word.end, _strinBuffer);
+void digitToStart(WordDescriptor word) {
+    char _strinBuffer[MAX_STRING_SIZE + 1];
+    char *endStringBuffer = copy(word.begin, word.end, _strinBuffer);
     char *recPosition = copyIf(_strinBuffer, endStringBuffer, word.begin, isdigit);
 
     copyIf(_strinBuffer, endStringBuffer, recPosition, isalpha);
@@ -392,14 +392,14 @@ void digitToStart(WordDescriptor word){
 
 void digitToEnd(WordDescriptor word) {
     char _stringBuffer[MAX_STRING_SIZE + 1];
-    char *endStringBuffer = copy(word.begin, word.end,_stringBuffer);
+    char *endStringBuffer = copy(word.begin, word.end, _stringBuffer);
     char *recPosition = copyIf(_stringBuffer, endStringBuffer, word.begin, isalpha);
     copyIf(_stringBuffer, endStringBuffer, recPosition, isdigit);
 }
 
 void digitToEndAndReverse(WordDescriptor word) {
     char _stringBuffer[MAX_STRING_SIZE + 1];
-    char *endStringBuffer = copy(word.begin, word.end,_stringBuffer);
+    char *endStringBuffer = copy(word.begin, word.end, _stringBuffer);
     char *recPosition = copyIf(_stringBuffer, endStringBuffer, word.begin, isalpha);
     copyIfReverse(endStringBuffer, _stringBuffer, recPosition, isdigit);
 }
@@ -473,12 +473,12 @@ void test_replace_digits_with_spaces() {
     ASSERT_STRING("h l", string_3);
 }
 
-bool are_two_words_equal(WordDescriptor a, WordDescriptor b){
+bool are_two_words_equal(WordDescriptor a, WordDescriptor b) {
     char *readBuffer1 = a.begin;
     char *readBuffer2 = b.begin;
 
-    while ((*readBuffer1 != ' ' || *readBuffer2 != ' ') && (*readBuffer1 != '\0' && readBuffer2 != '\0')){
-        if(*readBuffer1 != *readBuffer2 != '\0'){
+    while ((*readBuffer1 != ' ' || *readBuffer2 != ' ') && (*readBuffer1 != '\0' && readBuffer2 != '\0')) {
+        if (*readBuffer1 != *readBuffer2 != '\0') {
             return 0;
         }
 
@@ -526,12 +526,58 @@ void replace(char *source, char *w1, char *w2) {
 
 void test_replace() {
     char string[] = "0/15/2 who? -=-";
-    replace(string, "who?", "Yasuo");
-    ASSERT_STRING("0/15/2 Yasuo -=-", string);
+    replace(string, "who?", "ilya");
+    ASSERT_STRING("0/15/2 ilya -=-", string);
 
     char string2[] = "0/15/2 x -=- x";
-    replace(string2, "x", "Yasuo");
-    ASSERT_STRING("0/15/2 Yasuo -=- Yasuo", string2);
+    replace(string2, "x", "ilya");
+    ASSERT_STRING("0/15/2 ilya -=- ilya", string2);
+}
+
+bool are_two_words_ordered(WordDescriptor word1, WordDescriptor word2) {
+    char *str1 = word1.begin;
+    char *str2 = word2.begin;
+
+    while(*str1 != '\0' || *str1 != ' '){
+        if(*str2 - 'a' < *str1 - 'a' || *str2 == '\0' || *str2 == ' '){
+            return false;
+        } else if(*str2 - 'a' > *str1 - 'a'){
+            return true;
+        }
+        str1++;
+        str2++;
+    }
+    return true;
+}
+
+bool are_words_ordered(char *string) {
+    WordDescriptor word1, word2;
+
+    if (getWord(string, &word1)) {
+        word2 = word1;
+        char *string_ = word1.end;
+        while (getWord(string_, &word1)) {
+            if (!are_two_words_ordered(word2, word1)) {
+                return false;
+            }
+            word2 = word1;
+            string_ = word1.end;
+        }
+        return true;
+    } else {
+        return true;
+    }
+}
+
+void test_are_words_ordered() {
+    char string1[] = "";
+    assert(are_words_ordered(string1));
+
+    char string2[] = "zero one two";
+    assert(!are_words_ordered(string2));
+
+    char string3[] = "one two zero";
+    assert(are_words_ordered(string3));
 }
 
 void test_string_() {
@@ -568,4 +614,5 @@ void test_string_() {
     test_WordDescriptor();
     test_replace_digits_with_spaces();
     test_replace();
+    test_are_words_ordered();
 }
