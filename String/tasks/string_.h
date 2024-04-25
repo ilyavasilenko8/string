@@ -120,4 +120,14 @@ void test_WordDescriptor();
 void replace_digits_with_spaces(char *string);
 
 void test_replace_digits_with_spaces();
+
+bool are_two_words_equal(WordDescriptor a, WordDescriptor b);
+
+bool are_words_in_string_ordered(char *string);
+
+void test_are_words_in_string_ordered();
+
+void replace(char *source, char *w1, char *w2);
+
+void test_replace();
 #endif //STRING_STRING__H
