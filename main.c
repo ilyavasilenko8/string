@@ -2,6 +2,6 @@
 #include "String/tasks/string_.h"
 
 int main() {
-    test_removeNonLetters();
+    test_string_();
     return 0;
 }

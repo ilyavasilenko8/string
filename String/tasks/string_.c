@@ -288,6 +288,87 @@ void test_removeNonLetters() {
     ASSERT_STRING(s1, s2);
 }
 
+char *copy_if_not_extra_spaces(char *beginSource, const char *endSource, char *beginDestination) {
+    *beginDestination = *beginSource;
+    beginDestination++;
+    beginSource++;
+
+    while (beginSource != endSource) {
+        if (!isspace(*beginSource) || (isspace(*beginSource) && !isspace(*(beginSource - 1)))) {
+            *beginDestination = *beginSource;
+            beginDestination++;
+        }
+        beginSource++;
+    }
+
+    *beginDestination = '\0';
+
+    return beginDestination;
+}
+
+void removeExtraSpaces(char *s) {
+    if (strlen_(s) > 0) {
+        char *endSource = s + strlen_(s);
+        char *destination = copy_if_not_extra_spaces(s, endSource, s);
+        *destination = '\0';
+    }
+}
+
+void test_removeExtraSpaces_1() {
+    char s1[] = "";
+    char s2[] = "";
+
+    removeExtraSpaces(s1);
+
+    ASSERT_STRING(s1, s2);
+}
+
+void test_removeExtraSpaces_2() {
+    char s1[] = " ";
+    char s2[] = " ";
+
+    removeExtraSpaces(s1);
+
+    ASSERT_STRING(s1, s2);
+}
+void test_removeExtraSpaces_3() {
+    char s1[] = "  hell    o ";
+    char s2[] = " hell o ";
+    removeExtraSpaces(s1);
+
+    ASSERT_STRING(s1, s2);
+}
+void removeAdjacentEqualLetters(char *s) {
+    if (*s != '\0') {
+        s++;
+    }
+
+    char *read_buffer = s;
+
+    while (*read_buffer != '\0') {
+        if (*read_buffer != *(--s)) {
+            *(++s) = *read_buffer;
+        }
+        s++;
+        read_buffer++;
+    }
+    *s = '\0';
+}
+
+void test_removeAdjacentEqualLetters() {
+    char s1[] = "";
+    removeAdjacentEqualLetters(s1);
+    ASSERT_STRING(s1, "");
+
+    char s2[] = "zero";
+    removeAdjacentEqualLetters(s2);
+    ASSERT_STRING(s2, "zero");
+
+    char s3[] = "zzeeeeroooo";
+    removeAdjacentEqualLetters(s3);
+    ASSERT_STRING(s3, "zero");
+}
+
 void test_string_() {
     test_find_1();
     test_find_2();
@@ -316,4 +397,7 @@ void test_string_() {
     test_copyIf();
     test_copyIfReverse();
     test_removeNonLetters();
+    test_removeExtraSpaces_1();
+    test_removeExtraSpaces_2();
+    test_removeExtraSpaces_3();
 }
