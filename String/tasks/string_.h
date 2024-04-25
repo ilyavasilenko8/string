@@ -1,8 +1,17 @@
 #ifndef STRING_STRING__H
 #define STRING_STRING__H
 
+#define MAX_STRING_SIZE 100
+#define MAX_N_WORDS_IN_STRING 100
+#define MAX_WORD_SIZE 20
+
 #include <stdio.h>
 #include <stdbool.h>
+
+typedef struct WordDescriptor {
+    char *begin;
+    char *end;
+} WordDescriptor;
 
 size_t strlen_(const char *begin);
 
@@ -97,4 +106,15 @@ void test_removeExtraSpaces_3();
 void removeAdjacentEqualLetters(char *s);
 
 void test_removeAdjacentEqualLetters();
+
+int getWord(char *beginSearch, WordDescriptor *word);
+
+void digitToStart(WordDescriptor word);
+
+void digitToEnd(WordDescriptor word);
+
+void digits_to_end(char *string);
+
+void test_WordDescriptor();
+
 #endif //STRING_STRING__H
