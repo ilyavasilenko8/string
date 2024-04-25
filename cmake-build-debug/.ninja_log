@@ -1,7 +1,9 @@
 # ninja log v5
-0	77	7346419102450297	CMakeFiles/string.dir/main.c.obj	df704c70f411b933
-4	79	7346419102460306	CMakeFiles/string.dir/String/tasks/string.c.obj	ab54e3477d81c312
-2	181	7346904044576630	CMakeFiles/string.dir/main.c.obj	df704c70f411b933
-22	181	7346904044576630	CMakeFiles/string.dir/String/tasks/string.c.obj	ab54e3477d81c312
 2	110	7346920209176148	CMakeFiles/string.dir/main.c.obj	df704c70f411b933
 5	113	7346920209206175	CMakeFiles/string.dir/String/tasks/string.c.obj	ab54e3477d81c312
+22	246	7357451148932516	CMakeFiles/string.dir/main.c.obj	df704c70f411b933
+24	246	7357451148932516	CMakeFiles/string.dir/String/tasks/string_.c.obj	7a752150c1467120
+1	248	7357451148952534	CMakeFiles/string.dir/String/tasks/string.c.obj	ab54e3477d81c312
+248	471	7357451151164542	string.exe	2c583559553fe281
+1	49	7357452708229460	CMakeFiles/string.dir/main.c.obj	df704c70f411b933
+5	76	7357452708499703	CMakeFiles/string.dir/String/tasks/string_.c.obj	7a752150c1467120

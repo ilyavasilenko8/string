@@ -5,4 +5,6 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(string main.c
         String/tasks/string.h
-        String/tasks/string.c)
+        String/tasks/string.c
+        String/tasks/string_.h
+        String/tasks/string_.c)
