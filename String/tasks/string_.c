@@ -397,11 +397,36 @@ void digitToEnd(WordDescriptor word) {
     copyIf(_stringBuffer, endStringBuffer, recPosition, isdigit);
 }
 
+void digitToEndAndReverse(WordDescriptor word) {
+    char _stringBuffer[MAX_STRING_SIZE + 1];
+    char *endStringBuffer = copy(word.begin, word.end,_stringBuffer);
+    char *recPosition = copyIf(_stringBuffer, endStringBuffer, word.begin, isalpha);
+    copyIfReverse(endStringBuffer, _stringBuffer, recPosition, isdigit);
+}
+
 void digits_to_end(char *string) {
     WordDescriptor word;
     char *beginSearch = string;
     while (getWord(beginSearch, &word)) {
         digitToEnd(word);
+        beginSearch = word.end;
+    }
+}
+
+void digits_to_end_and_reverse(char *string) {
+    WordDescriptor word;
+    char *beginSearch = string;
+    while (getWord(beginSearch, &word)) {
+        digitToEndAndReverse(word);
+        beginSearch = word.end;
+    }
+}
+
+void letters_to_end(char *string) {
+    WordDescriptor word;
+    char *beginSearch = string;
+    while (getWord(beginSearch, &word)) {
+        digitToStart(word);
         beginSearch = word.end;
     }
 }
@@ -412,6 +437,41 @@ void test_WordDescriptor() {
     ASSERT_STRING("hello1338", string);
 }
 
+void replace_digits_with_spaces(char *string) {
+    char _stringBuffer[MAX_STRING_SIZE + 1];
+    char *end = string + strlen_(string);
+    char *readBuffer = _stringBuffer;
+    copy(string, end, readBuffer);
+
+    while (*readBuffer != '\0') {
+        if (isalpha(*readBuffer)) {
+            *string++ = *readBuffer;
+        } else {
+            while (isdigit(*readBuffer) && *readBuffer != '0') {
+                *string++ = ' ';
+                (*readBuffer)--;
+            }
+        }
+
+        readBuffer++;
+    }
+
+    *string = '\0';
+}
+
+void test_replace_digits_with_spaces() {
+    char string_1[] = "";
+    replace_digits_with_spaces(string_1);
+    ASSERT_STRING("", string_1);
+
+    char string_2[] = "hl";
+    replace_digits_with_spaces(string_2);
+    ASSERT_STRING("hl", string_2);
+
+    char string_3[] = "h12l";
+    replace_digits_with_spaces(string_3);
+    ASSERT_STRING("h l", string_3);
+}
 void test_string_() {
     test_find_1();
     test_find_2();
@@ -444,4 +504,5 @@ void test_string_() {
     test_removeExtraSpaces_2();
     test_removeExtraSpaces_3();
     test_WordDescriptor();
+    test_replace_digits_with_spaces();
 }

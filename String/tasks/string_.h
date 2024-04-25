@@ -117,4 +117,7 @@ void digits_to_end(char *string);
 
 void test_WordDescriptor();
 
+void replace_digits_with_spaces(char *string);
+
+void test_replace_digits_with_spaces();
 #endif //STRING_STRING__H
