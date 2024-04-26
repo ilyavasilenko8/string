@@ -182,4 +182,8 @@ char* getLastWordInFirstStringInSecondString(char *s1, char *s2);
 //bool is_word_in_BagOfWords(BagOfWords bag, WordDescriptor word);
 
 void test_getLastWordInFirstStringInSecondString();
+
+bool has_same_words(char *string);
+
+void test_has_same_words();
 #endif //STRING_STRING__H
