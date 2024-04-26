@@ -18,6 +18,13 @@ typedef struct BagOfWords{
     size_t size;
 } BagOfWords;
 
+typedef enum WordBeforeFirstWordWithAReturnCode {
+    FIRST_WORD_WITH_A,
+    NOT_FOUND_A_WORD_WITH_A,
+    WORD_FOUND,
+    EMPTY_STRING
+} WordBeforeFirstWordWithAReturnCode;
+
 size_t strlen_(const char *begin);
 
 char* find(char *begin, char *end, int ch);
@@ -161,4 +168,11 @@ void test_join_strings();
 void reverse_words_order(char *string);
 
 void test_reverse_words_order();
+
+void printWordBeforeFirstWordWithA(char *s);
+
+WordBeforeFirstWordWithAReturnCode getWordBeforeFirstWordWithA(char *s, WordDescriptor *w);
+
+void test_getWordBeforeFirstWordWithA();
+
 #endif //STRING_STRING__H
