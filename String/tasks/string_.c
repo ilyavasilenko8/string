@@ -1004,6 +1004,41 @@ void test_get_word_preceding_first_common_word() {
     ASSERT_STRING(word, "zero");
 }
 
+void delete_palindromes(char *string) {
+    getBagOfWords(&_bag, string);
+    char result[MAX_STRING_SIZE + 1];
+    size_t size = 0;
+
+    for (int i = 0; i < _bag.size; i++) {
+        if (!is_palindrome(_bag.words[i].begin, _bag.words[i].end)) {
+            for (char *s = _bag.words[i].begin; s != _bag.words[i].end; s++) {
+                result[size++] = *s;
+            }
+            result[size++] = ' ';
+        }
+    }
+    result[size--] = '\0';
+    copy(result, result + strlen_(result), string);
+}
+
+void test_delete_palindromes() {
+    char s1[] = "";
+    delete_palindromes(s1);
+    ASSERT_STRING(s1, "");
+
+    char s2[] = "ada dafd";
+    delete_palindromes(s2);
+    ASSERT_STRING(s2, "dafd");
+
+    char s3[] = "affs sdaa";
+    delete_palindromes(s3);
+    ASSERT_STRING(s3, "affs sdaa");
+
+    char s4[] = "ada affa";
+    delete_palindromes(s4);
+    ASSERT_STRING(s4, "");
+}
+
 void test_string_() {
     test_find_1();
     test_find_2();
@@ -1048,4 +1083,6 @@ void test_string_() {
     test_has_same_words();
     test_has_words_with_similar_characters();
     test_get_string_without_words_like_last_word();
+    test_get_word_preceding_first_common_word();
+    test_delete_palindromes();
 }
