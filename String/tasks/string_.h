@@ -147,4 +147,10 @@ void getBagOfWords(BagOfWords *bag, char *s);
 void print_words_in_reversed_order(char *string);
 
 void test_print_words_in_reversed_order();
+
+int is_palindrome(char *begin, char *end);
+
+int count_palindromes(char *string);
+
+void test_count_palindromes();
 #endif //STRING_STRING__H
