@@ -7,6 +7,9 @@
 
 #define ASSERT_STRING(expected, got) assertString(expected, got, __FILE__, __FUNCTION__, __LINE__)
 
+BagOfWords _bag;
+BagOfWords _bag;
+
 size_t strlen_(const char *begin) {
     char *end = begin;
     while (*end != '\0') {
@@ -532,6 +535,10 @@ void test_replace() {
     char string2[] = "0/15/2 x -=- x";
     replace(string2, "x", "ilya");
     ASSERT_STRING("0/15/2 ilya -=- ilya", string2);
+
+    char str2[] = "0/15/2 x-=x";
+    replace(str2, "x", "Ilya");
+    ASSERT_STRING("0/15/2 Ilya -=- Ilya", str2);
 }
 
 bool are_two_words_ordered(WordDescriptor word1, WordDescriptor word2) {
@@ -580,6 +587,36 @@ void test_are_words_ordered() {
     assert(are_words_ordered(string3));
 }
 
+void getBagOfWords(BagOfWords *bag, char *s){
+    bag->size = 0;
+    WordDescriptor word;
+    char *beginSearch = s;
+    while(getWord(beginSearch, &word)){
+        bag->words[bag->size].begin = word.begin;
+        bag->words[bag->size].end = word.end;
+        bag->size++;
+        beginSearch = word.end;
+    }
+}
+
+void print_words_in_reversed_order(char *string){
+    getBagOfWords(&_bag, string);
+    char word[MAX_WORD_SIZE];
+
+    for(size_t i = _bag.size; i > 0; i--){
+        copy(_bag.words[i-1].begin, _bag.words[i-1].end, word);
+        printf("%s\n", word);
+    }
+}
+
+void test_print_words_in_reversed_order() {
+    char string_1[] = "";
+    print_words_in_reversed_order(string_1);
+
+    char string_2[] = "One Two Three";
+    print_words_in_reversed_order(string_2);
+}
+
 void test_string_() {
     test_find_1();
     test_find_2();
@@ -615,4 +652,5 @@ void test_string_() {
     test_replace_digits_with_spaces();
     test_replace();
     test_are_words_ordered();
+    test_print_words_in_reversed_order();
 }
