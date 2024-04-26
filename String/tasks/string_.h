@@ -153,4 +153,8 @@ int is_palindrome(char *begin, char *end);
 int count_palindromes(char *string);
 
 void test_count_palindromes();
+
+void join_strings(char *string1, char *string2, char *result);
+
+void test_join_strings();
 #endif //STRING_STRING__H
