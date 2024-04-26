@@ -25,6 +25,13 @@ typedef enum WordBeforeFirstWordWithAReturnCode {
     EMPTY_STRING
 } WordBeforeFirstWordWithAReturnCode;
 
+typedef enum WordPrecedingFirstCommonWordReturnCode {
+    WORD_PRECEDING_EMPTY_STRING,
+    WORD_PRECEDING_FIRST_WORDS_IS_COMMON,
+    WORD_PRECEDING_WORD_FOUND,
+    WORD_PRECEDING_NOT_FOUND_COMMON_WORD
+} WordPrecedingFirstCommonWordReturnCode;
+
 size_t strlen_(const char *begin);
 
 char* find(char *begin, char *end, int ch);
@@ -196,4 +203,8 @@ void test_has_words_with_similar_characters();
 void get_string_without_words_like_last_word(char *string, char *result);
 
 void test_get_string_without_words_like_last_word();
+
+WordPrecedingFirstCommonWordReturnCode get_word_preceding_first_common_word(char *s1, char *s2, WordDescriptor *word);
+
+void test_get_word_preceding_first_common_word();
 #endif //STRING_STRING__H
