@@ -1017,7 +1017,7 @@ void delete_palindromes(char *string) {
             result[size++] = ' ';
         }
     }
-    result[size--] = '\0';
+    //result[size--] = '\0';
     copy(result, result + strlen_(result), string);
 }
 
@@ -1037,6 +1037,73 @@ void test_delete_palindromes() {
     char s4[] = "ada affa";
     delete_palindromes(s4);
     ASSERT_STRING(s4, "");
+}
+bool is_string_contain_all_letter(char *string, char *word) {
+    if (strlen_(word) == 0) {
+        return false;
+    }
+
+    size_t string_size = strlen_(string);
+    size_t word_size = strlen_(word);
+
+    for (char *s = word; s != word + word_size; s++) {
+        if (find(string, string + string_size, *s) == string + string_size) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void complement_smaller_string(char *string1, char *string2) {
+    getBagOfWords(&_bag, string1);
+    getBagOfWords(&_bag2, string2);
+
+    if (_bag.size > _bag2.size) {
+        char stringBuffer[MAX_STRING_SIZE + 1];
+        int size = 0;
+        for (size_t i = _bag2.size; i < _bag.size; i++) {
+            stringBuffer[size++] = ' ';
+            for (char *s = _bag.words[i].begin; s != _bag.words[i].end; s++) {
+                stringBuffer[size++] = *s;
+            }
+        }
+        copy(stringBuffer, stringBuffer + size, string2 + strlen_(string2));
+    } else if (_bag2.size > _bag.size) {
+        char stringBuffer[MAX_STRING_SIZE + 1];
+        int size = 0;
+        for (size_t i = _bag.size; i < _bag2.size; i++) {
+            stringBuffer[size++] = ' ';
+            for (char *s = _bag2.words[i].begin; s != _bag2.words[i].end; s++) {
+                stringBuffer[size++] = *s;
+            }
+        }
+        copy(stringBuffer, stringBuffer + size, string1 + strlen_(string1));
+    }
+}
+
+void test_complement_smaller_string() {
+    char s1_1[] = "";
+    char s1_2[] = "";
+    complement_smaller_string(s1_1, s1_2);
+    ASSERT_STRING(s1_1, "");
+    ASSERT_STRING(s1_2, "");
+
+    char s2_1[] = "zero one two";
+    char s2_2[] = "three five four";
+    complement_smaller_string(s2_1, s2_2);
+    ASSERT_STRING(s2_1, "zero one two");
+    ASSERT_STRING(s2_2, "three five four");
+
+    char s3_1[] = "zero one two";
+    char s3_2[] = "three";
+    complement_smaller_string(s3_1, s3_2);
+    ASSERT_STRING(s3_2, "three one two");
+
+    char s4_1[] = "zero";
+    char s4_2[] = "five one two";
+    complement_smaller_string(s4_1, s4_2);
+    ASSERT_STRING(s4_1, "zero one two");
 }
 
 void test_string_() {
@@ -1085,4 +1152,5 @@ void test_string_() {
     test_get_string_without_words_like_last_word();
     test_get_word_preceding_first_common_word();
     test_delete_palindromes();
+    test_complement_smaller_string();
 }

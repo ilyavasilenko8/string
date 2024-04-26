@@ -211,4 +211,12 @@ void test_get_word_preceding_first_common_word();
 void delete_palindromes(char *string);
 
 void test_delete_palindromes();
+
+void complement_smaller_string(char *string1, char *string2);
+
+void test_complement_smaller_string();
+
+bool is_string_contain_all_letter(char *string, char *word);
+
+void test_is_string_contain_all_letter();
 #endif //STRING_STRING__H
