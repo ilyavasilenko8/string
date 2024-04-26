@@ -157,4 +157,8 @@ void test_count_palindromes();
 void join_strings(char *string1, char *string2, char *result);
 
 void test_join_strings();
+
+void reverse_words_order(char *string);
+
+void test_reverse_words_order();
 #endif //STRING_STRING__H
