@@ -219,4 +219,5 @@ void test_complement_smaller_string();
 bool is_string_contain_all_letter(char *string, char *word);
 
 void test_is_string_contain_all_letter();
+
 #endif //STRING_STRING__H
